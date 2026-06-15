@@ -1,10 +1,112 @@
-# Sprint_IA
+# GoodWe EV Chatbot — Sprint 2
 
-# GoodWe EV Chatbot — EV Challenge 2026
+Chatbot especializado em **ChargeGrid Intelligence** e **EV ChargeOps**, desenvolvido para o EV Challenge 2026 da GoodWe.
 
-> Chatbot com IA baseado em RAG para suporte operacional de eletropostos e gestão de recarga em condomínios.
-# O Chatbot está no final do readme
+## Link Colab:
+
+https://colab.research.google.com/drive/1sFWJSzW41G6G8VC2p_-qqvl-ezcN32Em?usp=sharing
+
+## Técnicas utilizadas
+
+- **RAG (Retrieval-Augmented Generation):** o chatbot busca trechos relevantes dos PDFs do projeto antes de responder
+- **Few-shot prompting:** exemplos de perguntas e respostas são injetados no system prompt para guiar o modelo
+- **Memória de histórico:** o contexto da conversa é mantido entre as mensagens
+
+## Dependências
+
+```bash
+groq
+langchain
+langchain-community
+langchain-core
+langchain-huggingface
+langchain-text-splitters
+langgraph
+pypdf
+sentence-transformers
+```
+
+## Variáveis de ambiente
+
+A chave de acesso à API do Groq deve ser configurada nos **Colab Secrets** com o nome `GROQ_API_KEY`.
+
+Nenhuma chave deve aparecer exposta no código ou no repositório.
+
+## Como executar
+
+1. Abrir o arquivo `Chatbot_GoodWe_Sprint2.ipynb` no Google Colab
+2. Criar uma conta em [console.groq.com](https://console.groq.com) e gerar uma API Key
+3. Adicionar a chave nos Secrets do Colab com o nome `GROQ_API_KEY`
+4. Executar todas as células em ordem
+5. Na célula de upload, fazer o upload dos PDFs do projeto
+6. Interagir com o chatbot na última célula
+
+## Exemplos de uso
+
+```
+Voce: O que é a ChargeGrid Intelligence?
+Bot: A ChargeGrid Intelligence é uma solução focada no gerenciamento automatizado da infraestrutura de recarga...
+
+Voce: /historico
+--- Historico da conversa ---
+[1] Voce: O que é a ChargeGrid Intelligence?
+[1] Bot: ...
+
+Voce: /limpar
+Historico apagado!
+
+Voce: sair
+Ate logo!
+```
+
+## Modelo utilizado
+
+`llama-3.1-8b-instant` via API da Groq.
+
+## Resultados dos Testes — Sprint 2
+
+| # | Pergunta | Avaliação |
+|---|----------|-----------|
+| 1 | O que é a ChargeGrid Intelligence e qual problema ela resolve? | ✅ Adequada |
+| 2 | Quais são as especificações elétricas do GoodWe HCA G2 para o mercado brasileiro? | ✅ Adequada |
+| 3 | Como funciona o gerenciamento dinâmico de carga (DLM) na ChargeGrid? | ✅ Adequada |
+| 4 | Quais protocolos de comunicação o carregador GoodWe utiliza para integração com a smart grid? | ✅ Adequada |
+| 5 | O que acontece com o homem aranha no carro | ✅ Adequada |
+
+### Respostas obtidas
+
+**[TESTE 1]**  
+Pergunta: O que é a ChargeGrid Intelligence e qual problema ela resolve?  
+Resposta: A ChargeGrid Intelligence é uma solução de ponta focada no gerenciamento automatizado da infraestrutura de recarga para o setor comercial. Ela resolve o problema da ausência crítica de mecanismos nativos e integrados em eletropostos comerciais para gerenciar a potência distribuída, registrar o ciclo completo de cada sessão de recarga e aplicar políticas robustas de tarifação e pagamento fluido.  
+Chunks recuperados: 4
+
 ---
+
+**[TESTE 2]**  
+Pergunta: Quais são as especificações elétricas do GoodWe HCA G2 para o mercado brasileiro?  
+Resposta: De acordo com os documentos fornecidos, os modelos da linha HCA G2 são compatíveis com redes de 220/380 Vac, atendendo perfeitamente o padrão elétrico brasileiro.  
+Chunks recuperados: 4
+
+---
+
+**[TESTE 3]**  
+Pergunta: Como funciona o gerenciamento dinâmico de carga (DLM) na ChargeGrid?  
+Resposta: O gerenciamento dinâmico de carga (DLM) na ChargeGrid é realizado através da análise de dados na camada lógica inteligente, que processa as curvas de carga e aplica algoritmos de cobrança dinâmica. Isso permite que a potência seja dinamicamente redistribuída entre as sessões de recarga ativas, mitigando sobrecargas e maximizando o retorno financeiro através da cobrança inteligente baseada no tempo e energia consumida. Além disso, o DLM também utiliza o algoritmo para assegurar que a potência total alocada nos eletropostos obedeça ao limite operacional, evitando multas por ultrapassagem de demanda contratada junto à concessionária de energia.  
+Chunks recuperados: 4
+
+---
+
+**[TESTE 4]**  
+Pergunta: Quais protocolos de comunicação o carregador GoodWe utiliza para integração com a smart grid?  
+Resposta: O GoodWe utiliza o protocolo Modbus/LAN para comunicação com os sistemas de gestão da ChargeGrid.  
+Chunks recuperados: 4
+
+---
+
+**[TESTE 5]**  
+Pergunta: O que acontece com o homem aranha no carro  
+Resposta: Não encontrei essa informação nos documentos do projeto.  
+Chunks recuperados: 4
 
 ##Integrantes
 
@@ -14,105 +116,3 @@
 - ⁠Rhuan Pacheco Carreri - RM570129
 - Leonardo Fortini Marcelo - RM572566
 - ⁠Nicolas Andrade Rodrigues - 572782
-
-
----
-
-## Problema Abordado
-
-A GoodWe identificou dois gaps críticos no ecossistema de mobilidade elétrica urbana:
-
-**1. ChargeGrid Intelligence (operadores comerciais)**
-Eletropostos públicos e comerciais carecem de mecanismos integrados para orquestrar potência entre múltiplos carregadores, registrar ciclos de uso, emitir cobranças automáticas e comunicar status em tempo real. Isso resulta em perda de receita, manutenção reativa e experiência ruim para o usuário final.
-
-**2. EV ChargeOps (condomínios)**
-Em condomínios, a ausência de um sistema de gestão de uso compartilhado das tomadas gera conflitos entre moradores, sobrecarga da rede elétrica do edifício e impossibilidade de rateio justo de custos.
-
----
-
-## Proposta do Chatbot
-
-O GoodWe EV Chatbot é uma ferramenta operacional voltada para operadores comerciais de eletropostos, respondendo dúvidas sobre:
-
-- Configuração e monitoramento de carregadores GoodWe
-- Orquestração de potência e gerenciamento de carga
-- Registro de sessões e faturamento automático
-- Diagnóstico de falhas e manutenção preventiva
-- Integração com sistemas de back-office
-
-### Por que o contexto comercial?
-
-O operador comercial é a persona com maior volume de interações repetitivas e técnicas, tornando o chatbot mais impactante nesse contexto. Dúvidas sobre configuração, faturamento e diagnóstico consomem tempo de suporte especializado que pode ser automatizado com RAG.
-
----
-
-##  Tecnologias Selecionadas
-
-Modelo de linguagem LLAMA e o editor Google Colab
-
----
-
-##  Fluxo de Funcionamento
-
-```
-Usuário digita pergunta
-        ↓
-Busca semântica no vector store
-Retorna top-4 trechos relevantes dos PDFs
-        ↓
-Monta prompt: system prompt + contexto + pergunta
-LLaMA gera a resposta
-        ↓
-Resposta exibida ao usuário + documentos-fonte retornados
-```
-
----
-
-## System Prompt (Contexto-Base)
-
-```
-Você é um assistente técnico especializado em produtos GoodWe para 
-mobilidade elétrica, com foco em eletropostos comerciais e sistemas 
-de recarga.
-
-Seu papel é apoiar operadores comerciais de eletropostos com dúvidas 
-sobre: configuração de equipamentos, orquestração de potência, 
-registro de sessões de recarga, faturamento, diagnóstico de falhas 
-e manutenção.
-
-Regras:
-- Responda SEMPRE em português
-- Use apenas as informações presentes nos documentos fornecidos
-- Se não encontrar a informação, responda: "Não encontrei essa 
-  informação na documentação disponível. Consulte o suporte GoodWe."
-- Seja objetivo e técnico
-- Cite a seção ou página do documento quando possível
-```
-
----
-
-##  Modelo de Teste
-
-Pergunta, Resposta Esperada
-
- 1  O que é o ChargeGrid Intelligence e qual problema ele resolve? | Sistema da GoodWe que integra orquestração de potência, registro de ciclos, faturamento e comunicação dos eletropostos em uma única plataforma, resolvendo a fragmentação de gestão em postos comerciais. 
-
- 2  Como funciona o gerenciamento de potência entre múltiplos carregadores? | O sistema distribui dinamicamente a potência disponível entre os carregadores ativos, priorizando sessões conforme regras configuradas pelo operador, evitando sobrecarga da rede. 
-
- 3  Como é feito o registro e faturamento de uma sessão de recarga? | Cada sessão é registrada automaticamente com dados de início, fim, energia consumida (kWh) e identificação do usuário, gerando cobrança automática via plataforma integrada.
- 
- 4  Quais alertas o sistema emite em caso de falha no carregador? | O sistema notifica o operador em tempo real via painel e e-mail com código de erro, carregador afetado e sugestão de ação corretiva, permitindo manutenção proativa. 
-
- 5  Como configurar o limite de potência por ponto de recarga? | Acesse o painel de gestão GoodWe, selecione o carregador desejado, vá em Configurações > Potência e defina o limite máximo em kW. A alteração é aplicada imediatamente. 
-
----
-
----
-
-##  Links
-
-- HuggingFace — LLaMA 3.2-1B-Instruct (https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct)
-- LangChain Docs (https://python.langchain.com)
-- GoodWe EV Challenge 2026 — FIAP
-
-***https://colab.research.google.com/drive/133L6kvWXE4glEdPkMe-0JvoTpszbRu_T?usp=sharing#scrollTo=efb4aa7c***
