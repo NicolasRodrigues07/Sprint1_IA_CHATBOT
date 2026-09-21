@@ -4,7 +4,7 @@ Chatbot especializado em **ChargeGrid Intelligence** e **EV ChargeOps**, desenvo
 
 ## Link Colab:
 
-https://colab.research.google.com/drive/1sFWJSzW41G6G8VC2p_-qqvl-ezcN32Em?usp=sharing
+[https://colab.research.google.com/drive/1sFWJSzW41G6G8VC2p_-qqvl-ezcN32Em?usp=sharing](https://colab.research.google.com/drive/1-Lcttvl6WUswOmZaFOrmmx8P3jb7JvmM?usp=sharing)
 
 ## Técnicas utilizadas
 
